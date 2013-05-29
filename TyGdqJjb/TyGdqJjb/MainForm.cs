@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using TyGdqJjb.Forms;
+using TyGdqJjb.Properties;
 using TyGdqJjb.TyData;
 using TyGdqJjb.TyModels;
 using TyModel.Data;
@@ -108,12 +109,8 @@ namespace TyGdqJjb
                 catch (Exception err)
                 {
                     TyLogModel.Instance.WriteLog(LogType.Error, err.Message);
+                    MessageBox.Show(Resources.MainForm_DgetSourceModel_TypeEnd_TypeAchievementDic_Error);
                 }
-                finally
-                {
-                    MessageBox.Show("配置与程序信息异常，请删除配置文件重启软件。");
-                }
-                
             }
         }
 

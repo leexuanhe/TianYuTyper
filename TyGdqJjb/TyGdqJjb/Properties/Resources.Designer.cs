@@ -59,5 +59,14 @@ namespace TyGdqJjb.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   查找类似 配置与程序信息异常，请删除配置文件重启软件。 的本地化字符串。
+        /// </summary>
+        internal static string MainForm_DgetSourceModel_TypeEnd_TypeAchievementDic_Error {
+            get {
+                return ResourceManager.GetString("MainForm_DgetSourceModel_TypeEnd_TypeAchievementDic_Error", resourceCulture);
+            }
+        }
     }
 }

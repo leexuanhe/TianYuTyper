@@ -28,155 +28,162 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("常规");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("发送顺序");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("发送", new System.Windows.Forms.TreeNode[] {
-            treeNode5});
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.treeView1 = new System.Windows.Forms.TreeView();
-            this.panelRight = new System.Windows.Forms.Panel();
-            this.panelSend = new System.Windows.Forms.Panel();
-            this.dgvSortList = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.tabControlMain = new System.Windows.Forms.TabControl();
+            this.tabPageDefault = new System.Windows.Forms.TabPage();
+            this.tabPageSend = new System.Windows.Forms.TabPage();
+            this.tabPageColor = new System.Windows.Forms.TabPage();
+            this.tyPanel1 = new TyGdqJjb.TyControls.TyPanel();
+            this.dgvSendList = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.SendSortShow = new System.Windows.Forms.FlowLayoutPanel();
-            this.panelRight.SuspendLayout();
-            this.panelSend.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvSortList)).BeginInit();
+            this.Column3 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabControlMain.SuspendLayout();
+            this.tabPageSend.SuspendLayout();
+            this.tyPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSendList)).BeginInit();
             this.SuspendLayout();
             // 
-            // treeView1
+            // tabControlMain
             // 
-            this.treeView1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.treeView1.Location = new System.Drawing.Point(10, 30);
-            this.treeView1.Name = "treeView1";
-            treeNode4.Name = "节点0";
-            treeNode4.Text = "常规";
-            treeNode5.Name = "节点2";
-            treeNode5.Text = "发送顺序";
-            treeNode6.Name = "节点1";
-            treeNode6.Text = "发送";
-            this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode4,
-            treeNode6});
-            this.treeView1.ShowLines = false;
-            this.treeView1.ShowPlusMinus = false;
-            this.treeView1.ShowRootLines = false;
-            this.treeView1.Size = new System.Drawing.Size(121, 299);
-            this.treeView1.TabIndex = 0;
+            this.tabControlMain.Controls.Add(this.tabPageDefault);
+            this.tabControlMain.Controls.Add(this.tabPageSend);
+            this.tabControlMain.Controls.Add(this.tabPageColor);
+            this.tabControlMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlMain.Location = new System.Drawing.Point(10, 30);
+            this.tabControlMain.Name = "tabControlMain";
+            this.tabControlMain.SelectedIndex = 0;
+            this.tabControlMain.Size = new System.Drawing.Size(455, 299);
+            this.tabControlMain.TabIndex = 0;
             // 
-            // panelRight
+            // tabPageDefault
             // 
-            this.panelRight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelRight.Controls.Add(this.panelSend);
-            this.panelRight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelRight.Location = new System.Drawing.Point(131, 30);
-            this.panelRight.Margin = new System.Windows.Forms.Padding(0);
-            this.panelRight.Name = "panelRight";
-            this.panelRight.Size = new System.Drawing.Size(334, 299);
-            this.panelRight.TabIndex = 1;
+            this.tabPageDefault.AutoScroll = true;
+            this.tabPageDefault.Location = new System.Drawing.Point(4, 26);
+            this.tabPageDefault.Name = "tabPageDefault";
+            this.tabPageDefault.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageDefault.Size = new System.Drawing.Size(447, 269);
+            this.tabPageDefault.TabIndex = 0;
+            this.tabPageDefault.Text = "常规";
+            this.tabPageDefault.UseVisualStyleBackColor = true;
             // 
-            // panelSend
+            // tabPageSend
             // 
-            this.panelSend.Controls.Add(this.SendSortShow);
-            this.panelSend.Controls.Add(this.dgvSortList);
-            this.panelSend.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelSend.Location = new System.Drawing.Point(0, 0);
-            this.panelSend.Name = "panelSend";
-            this.panelSend.Size = new System.Drawing.Size(332, 297);
-            this.panelSend.TabIndex = 0;
+            this.tabPageSend.Controls.Add(this.tyPanel1);
+            this.tabPageSend.Location = new System.Drawing.Point(4, 26);
+            this.tabPageSend.Name = "tabPageSend";
+            this.tabPageSend.Padding = new System.Windows.Forms.Padding(6);
+            this.tabPageSend.Size = new System.Drawing.Size(447, 269);
+            this.tabPageSend.TabIndex = 1;
+            this.tabPageSend.Text = "发送";
+            this.tabPageSend.UseVisualStyleBackColor = true;
             // 
-            // dgvSortList
+            // tabPageColor
             // 
-            this.dgvSortList.AllowUserToAddRows = false;
-            this.dgvSortList.AllowUserToDeleteRows = false;
-            this.dgvSortList.AllowUserToResizeColumns = false;
-            this.dgvSortList.AllowUserToResizeRows = false;
-            this.dgvSortList.BackgroundColor = System.Drawing.Color.White;
-            this.dgvSortList.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvSortList.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvSortList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.dgvSortList.ColumnHeadersHeight = 24;
-            this.dgvSortList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.dgvSortList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.tabPageColor.Location = new System.Drawing.Point(4, 26);
+            this.tabPageColor.Name = "tabPageColor";
+            this.tabPageColor.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageColor.Size = new System.Drawing.Size(447, 269);
+            this.tabPageColor.TabIndex = 2;
+            this.tabPageColor.Text = "颜色";
+            this.tabPageColor.UseVisualStyleBackColor = true;
+            // 
+            // tyPanel1
+            // 
+            this.tyPanel1.Controls.Add(this.dgvSendList);
+            this.tyPanel1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.tyPanel1.Location = new System.Drawing.Point(6, 6);
+            this.tyPanel1.Margin = new System.Windows.Forms.Padding(1);
+            this.tyPanel1.Name = "tyPanel1";
+            this.tyPanel1.Padding = new System.Windows.Forms.Padding(1, 25, 1, 1);
+            this.tyPanel1.Size = new System.Drawing.Size(280, 257);
+            this.tyPanel1.TabIndex = 0;
+            this.tyPanel1.Title = "发送列表";
+            // 
+            // dgvSendList
+            // 
+            this.dgvSendList.AllowUserToAddRows = false;
+            this.dgvSendList.AllowUserToDeleteRows = false;
+            this.dgvSendList.AllowUserToResizeColumns = false;
+            this.dgvSendList.AllowUserToResizeRows = false;
+            this.dgvSendList.BackgroundColor = System.Drawing.Color.White;
+            this.dgvSendList.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvSendList.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Navy;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvSendList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvSendList.ColumnHeadersHeight = 24;
+            this.dgvSendList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.dgvSendList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Column2,
             this.Column3,
             this.Column4});
-            this.dgvSortList.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dgvSortList.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dgvSortList.EnableHeadersVisualStyles = false;
-            this.dgvSortList.GridColor = System.Drawing.Color.White;
-            this.dgvSortList.Location = new System.Drawing.Point(0, 71);
-            this.dgvSortList.MultiSelect = false;
-            this.dgvSortList.Name = "dgvSortList";
-            this.dgvSortList.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            this.dgvSortList.RowHeadersVisible = false;
-            this.dgvSortList.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dgvSortList.RowTemplate.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.dgvSortList.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black;
-            this.dgvSortList.RowTemplate.Height = 24;
-            this.dgvSortList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvSortList.Size = new System.Drawing.Size(332, 226);
-            this.dgvSortList.TabIndex = 1;
-            this.dgvSortList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSortList_CellContentClick);
-            this.dgvSortList.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvSortList_CellFormatting);
+            this.dgvSendList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvSendList.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.dgvSendList.EnableHeadersVisualStyles = false;
+            this.dgvSendList.GridColor = System.Drawing.Color.White;
+            this.dgvSendList.Location = new System.Drawing.Point(1, 25);
+            this.dgvSendList.MultiSelect = false;
+            this.dgvSendList.Name = "dgvSendList";
+            this.dgvSendList.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.dgvSendList.RowHeadersVisible = false;
+            this.dgvSendList.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dgvSendList.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dgvSendList.RowTemplate.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.dgvSendList.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black;
+            this.dgvSendList.RowTemplate.Height = 24;
+            this.dgvSendList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvSendList.Size = new System.Drawing.Size(278, 231);
+            this.dgvSendList.TabIndex = 1;
+            this.dgvSendList.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvSendList_CellFormatting);
             // 
             // Column1
             // 
             this.Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.Column1.HeaderText = "显示";
+            this.Column1.HeaderText = "项目";
             this.Column1.Name = "Column1";
-            this.Column1.Width = 36;
+            this.Column1.Width = 55;
             // 
             // Column2
             // 
-            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column2.HeaderText = "描述";
+            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.Column2.HeaderText = "优先级";
             this.Column2.Name = "Column2";
+            this.Column2.Width = 67;
             // 
             // Column3
             // 
             this.Column3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.Column3.HeaderText = "优先级";
+            this.Column3.HeaderText = "可见";
             this.Column3.Name = "Column3";
-            this.Column3.Width = 67;
+            this.Column3.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column3.Width = 36;
             // 
             // Column4
             // 
             this.Column4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.Column4.HeaderText = "设置优先";
+            this.Column4.HeaderText = "描述词";
             this.Column4.Name = "Column4";
-            this.Column4.Width = 60;
-            // 
-            // SendSortShow
-            // 
-            this.SendSortShow.AutoScroll = true;
-            this.SendSortShow.BackColor = System.Drawing.Color.White;
-            this.SendSortShow.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SendSortShow.Location = new System.Drawing.Point(0, 0);
-            this.SendSortShow.Name = "SendSortShow";
-            this.SendSortShow.Size = new System.Drawing.Size(332, 71);
-            this.SendSortShow.TabIndex = 2;
+            this.Column4.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column4.Width = 48;
             // 
             // SettingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.ClientSize = new System.Drawing.Size(475, 339);
-            this.Controls.Add(this.panelRight);
-            this.Controls.Add(this.treeView1);
+            this.Controls.Add(this.tabControlMain);
             this.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(90)))), ((int)(((byte)(90)))), ((int)(((byte)(90)))));
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -187,23 +194,26 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "设置";
             this.Load += new System.EventHandler(this.SettingForm_Load);
-            this.panelRight.ResumeLayout(false);
-            this.panelSend.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvSortList)).EndInit();
+            this.tabControlMain.ResumeLayout(false);
+            this.tabPageSend.ResumeLayout(false);
+            this.tyPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSendList)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TreeView treeView1;
-        private System.Windows.Forms.Panel panelRight;
-        private System.Windows.Forms.Panel panelSend;
-        private System.Windows.Forms.DataGridView dgvSortList;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Column1;
+        private System.Windows.Forms.TabControl tabControlMain;
+        private System.Windows.Forms.TabPage tabPageDefault;
+        private System.Windows.Forms.TabPage tabPageSend;
+        private System.Windows.Forms.TabPage tabPageColor;
+        private TyControls.TyPanel tyPanel1;
+        private System.Windows.Forms.DataGridView dgvSendList;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private System.Windows.Forms.DataGridViewButtonColumn Column4;
-        private System.Windows.Forms.FlowLayoutPanel SendSortShow;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+
     }
 }

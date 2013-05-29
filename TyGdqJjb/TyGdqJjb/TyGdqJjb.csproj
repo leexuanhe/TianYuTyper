@@ -87,6 +87,9 @@
     <Compile Include="TyControls\TyButton.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="TyControls\TyPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="TyData\TempData.cs" />
     <Compile Include="TyModels\DgetSourceModel.cs" />
     <Compile Include="TyModels\DQQOperation.cs" />
