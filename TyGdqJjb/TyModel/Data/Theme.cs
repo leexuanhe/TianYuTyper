@@ -15,6 +15,8 @@ namespace TyModel.Data
         private Color _titleBack = Color.Indigo;
         private Color _countBack = Color.Peru;
         private Color _groupBack = Color.Green;
+        private Color _maxStay = Color.Tomato;
+        private Color _backSpaceColor = Color.LightGreen;
 
         #region 对照区
 
@@ -34,6 +36,24 @@ namespace TyModel.Data
         {
             set { _dBgColor = value; }
             get { return _dBgColor; }
+        }
+
+        /// <summary>
+        /// 最高停留颜色
+        /// </summary>
+        public Color MaxStay
+        {
+            set { _maxStay = value; }
+            get { return _maxStay; }
+        }
+
+        /// <summary>
+        /// 回改色
+        /// </summary>
+        public Color BackSpaceColor
+        {
+            set { _backSpaceColor = value; }
+            get { return _backSpaceColor; }
         }
 
         #endregion

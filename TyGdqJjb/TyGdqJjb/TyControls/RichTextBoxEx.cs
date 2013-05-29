@@ -33,7 +33,7 @@ namespace TyGdqJjb.TyControls
                 {
                     this.SelectionStart = i.Key;
                     this.SelectionLength = 1;
-                    this.SelectionBackColor = Color.LightGreen;
+                    this.SelectionBackColor = GlobalModel.Instance.Theme.BackSpaceColor;
                 }
             }
             //最高停留
@@ -43,7 +43,7 @@ namespace TyGdqJjb.TyControls
                 var find = TempData.Instance.TypeReport.Find(o => o.UseTime.TotalSeconds == max);
                 this.SelectionStart = find.Start;
                 this.SelectionLength = find.Word.Length;
-                this.SelectionColor = Color.Tomato;
+                this.SelectionColor = GlobalModel.Instance.Theme.MaxStay;
                 TypeData.Instance.GetTypeAchievement().AchievementDic["停留"].关连值 = string.Format("[{0}]{1}s", find.Word,find.UseTime.TotalSeconds.ToString("0.00"));
                 TypeData.Instance.GetTypeAchievement().AchievementDic["打词"].关连值 = TempData.Instance.TypeReport.Count(o => o.Word.Length >= 2);
             }
@@ -81,6 +81,7 @@ namespace TyGdqJjb.TyControls
             BackColor = GlobalModel.Instance.Theme.DBgColor;
             SelectAll();
             SelectionBackColor = BackColor;
+            SelectionColor = Color.Black;
             this.SelectionStart = 0;
             this.ScrollToCaret();
         }

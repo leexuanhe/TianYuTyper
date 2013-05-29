@@ -35,6 +35,7 @@ namespace TyModel.Model
 
         public int UserBlockCount { set; get; }
         public int SystemBlockCount { set; get; }
+        public int UserWhiteCount { set; get; }
         #region Report
 
         public delegate bool CallBack(int hwnd, int lParam);
@@ -56,8 +57,7 @@ namespace TyModel.Model
 
         public bool Report(int hwnd, int lParam)
         {
-            int pHwnd;
-            pHwnd = GetParent(hwnd);
+            var pHwnd = GetParent(hwnd);
             if (pHwnd == 0 && IsWindowVisible(hwnd) == 1)
             {
                 var sb = new StringBuilder(512);
@@ -66,23 +66,54 @@ namespace TyModel.Model
                 if (classname.ToString().ToLower() == "txguifoundation")
                 {
                     GetWindowText(hwnd, sb, sb.Capacity);
-                    if (sb.Length > 0 && !BlockGroupList.Exists(o => o == sb.ToString()))
+                    var name = sb.ToString().Trim();
+                    if (name.Length > 0 && !BlockGroupList.Exists(o => o == name))
                     {
-
-                        if (GlobalModel.Instance.Config.UserBlockGroupList != null)
+                        //启用白名单功能
+                        if (GlobalModel.Instance.Config.IsUseWhiteList)
                         {
-                            if (!GlobalModel.Instance.Config.UserBlockGroupList.Exists(o => o == sb.ToString()))
+                            if (GlobalModel.Instance.Config.UserWhiteGroupList != null)
                             {
-                                GlobalModel.Instance.GroupData.GroupList.Add(new ListGroup {Name = sb.ToString(),Classname = hwnd});
-                            }
-                            else
-                            {
-                                UserBlockCount++;
+                                if (GlobalModel.Instance.Config.UserWhiteGroupList.Exists(o => o == name))
+                                {
+                                    GlobalModel.Instance.GroupData.GroupList.Add(new ListGroup
+                                        {
+                                            Name = name,
+                                            Classname = hwnd
+                                        });
+                                }
+                                else
+                                {
+                                    UserWhiteCount++;
+                                }
                             }
                         }
                         else
                         {
-                            GlobalModel.Instance.GroupData.GroupList.Add(new ListGroup { Name = sb.ToString(), Classname = hwnd});
+                            //默认黑名单功能
+                            if (GlobalModel.Instance.Config.UserBlockGroupList != null)
+                            {
+                                if (!GlobalModel.Instance.Config.UserBlockGroupList.Exists(o => o == name))
+                                {
+                                    GlobalModel.Instance.GroupData.GroupList.Add(new ListGroup
+                                        {
+                                            Name = name,
+                                            Classname = hwnd
+                                        });
+                                }
+                                else
+                                {
+                                    UserBlockCount++;
+                                }
+                            }
+                            else
+                            {
+                                GlobalModel.Instance.GroupData.GroupList.Add(new ListGroup
+                                    {
+                                        Name = name,
+                                        Classname = hwnd
+                                    });
+                            }
                         }
                     }
                     else
@@ -119,6 +150,7 @@ namespace TyModel.Model
             GlobalModel.Instance.GroupData.GroupList.Clear();
             UserBlockCount = 0;
             SystemBlockCount = 0;
+            UserWhiteCount = 0;
             EnumWindows(this.Report, 0);
             if (GlobalModel.Instance.GroupData.GroupList.Count == 0)
             {
@@ -144,6 +176,7 @@ namespace TyModel.Model
             GlobalModel.Instance.GroupData.GroupList.Clear();
             UserBlockCount = 0;
             SystemBlockCount = 0;
+            UserWhiteCount = 0;
             EnumWindows(this.Report, 0);
             return GlobalModel.Instance.GroupData.GroupList;
         }

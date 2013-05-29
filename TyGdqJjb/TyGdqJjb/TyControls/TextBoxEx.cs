@@ -26,10 +26,12 @@ namespace TyGdqJjb.TyControls
                     this.TextChanged -= TextBoxEx_TextChanged;
                     this.ResetText();
                     this.ReadOnly = false;
+                    this.MaxLength = TypeData.Instance.TypeText.Length;
                     Array.Clear(_last,0,2);
                     this.TextChanged += TextBoxEx_TextChanged;
                     dgetSourceModel.Progress = 0;
                     TypeFlag = 0;
+                    TypeData.Instance.ImfactTextCount = TypeData.Instance.TypeText.Length;
                     TempData.Instance.BackReport.Clear();
                     TempData.Instance.TypeReport.Clear();
                     this.Focus();
@@ -188,8 +190,17 @@ namespace TyGdqJjb.TyControls
                     //进度条
                     DgetSourceModel.Progress = textType.Length*1.0/text.Length;
                     //打完了
-                    if (textType.Length == text.Length)
+                    if (textType.Length >= text.Length)
                     {
+                        //判断最后一次输入是否正确，正确时才触发完成事件
+                        if (GlobalModel.Instance.Config.LastErrorNotSend)
+                        {
+                            var lastStart = TempData.Instance.TypeReport[TempData.Instance.TypeReport.Count - 1].Start;
+                            var lastLength =
+                                TempData.Instance.TypeReport[TempData.Instance.TypeReport.Count - 1].Word.Length;
+                            if (textType.Substring(lastStart,lastLength) != text.Substring(lastStart,lastLength))
+                                return;
+                        }
                         //打完之后的数据处理
                         TypeFlag = 0;
                         DgetSourceModel.End(TypeState.TypeOver, DateTime.Now);

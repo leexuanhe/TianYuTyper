@@ -47,8 +47,12 @@ namespace TyGdqJjb
                 (sender, args) => 背景色ToolStripMenuItem.BackColor = this.richTextBoxEx1.BackColor;
             richTextBoxEx1.BackColor = GlobalModel.Instance.Theme.DBgColor;
             this.textBoxEx1.BackColorChanged += (sender, args) => 背景色ToolStripMenuItem1.BackColor = this.textBoxEx1.BackColor;
+            字体ToolStripMenuItem1.Font = GlobalModel.Instance.Theme.DFont;
+            字体ToolStripMenuItem.Font = GlobalModel.Instance.Theme.GFont;
             打对色ToolStripMenuItem.ForeColor = GlobalModel.Instance.Theme.Right;
             打错色ToolStripMenuItem.ForeColor = GlobalModel.Instance.Theme.Wrong;
+            最高停留色ToolStripMenuItem.ForeColor = GlobalModel.Instance.Theme.MaxStay;
+            回改色ToolStripMenuItem.ForeColor = GlobalModel.Instance.Theme.BackSpaceColor;
         }
         /// <summary>
         /// 跟打完成
@@ -63,6 +67,9 @@ namespace TyGdqJjb
             //输入次数过少不发送
             if (TypeData.Instance.ImfactTextCount <= 0)
             {
+                TyLogModel.Instance.WriteLog(LogType.Info,
+                                             string.Format("\n实际值{0}\n字数值{1}\n", TypeData.Instance.ImfactTextCount,
+                                                           TypeData.Instance.TypeText.Length));
                 MessageBox.Show(@"数据过低，无法统计！");
                 return;
             }
@@ -181,6 +188,27 @@ namespace TyGdqJjb
         #endregion
 
         #region 对照区右键菜单 
+        private void 最高停留色ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var colorDialog = new ColorDialog { Color = GlobalModel.Instance.Theme.MaxStay, FullOpen = true })
+            {
+                if (colorDialog.ShowDialog(this) != DialogResult.OK) return;
+                GlobalModel.Instance.Theme.MaxStay = colorDialog.Color;
+                GlobalModel.Instance.ConfigModel.ConfigSave(ConfigType.Theme);
+                最高停留色ToolStripMenuItem.ForeColor = colorDialog.Color;
+            }
+        }
+
+        private void 回改色ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var colorDialog = new ColorDialog { Color = GlobalModel.Instance.Theme.BackSpaceColor, FullOpen = true })
+            {
+                if (colorDialog.ShowDialog(this) != DialogResult.OK) return;
+                GlobalModel.Instance.Theme.BackSpaceColor = colorDialog.Color;
+                GlobalModel.Instance.ConfigModel.ConfigSave(ConfigType.Theme);
+                回改色ToolStripMenuItem.ForeColor = colorDialog.Color;
+            }
+        }
 
         private void 字体ToolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -234,9 +262,6 @@ namespace TyGdqJjb
                 case Keys.F5:
                     GroupOprationModel.Instance.RefreshGroup();
                     break;
-                case Keys.D | Keys.ControlKey:
-                    headPanel1.ShowDuwnList();
-                    break;
             }
         }
 
@@ -249,11 +274,6 @@ namespace TyGdqJjb
             settingForm.ShowDialog(this);
         }
         #endregion
-
-        
-
-        
-
 
     }
 }

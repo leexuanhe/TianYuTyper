@@ -26,7 +26,7 @@ namespace TyModel.Model
                 var filepath = SavePath + "\\" + DateTime.Now.ToString("yyyyMMdd") + ".Log";
                 if (!File.Exists(filepath)) File.Create(filepath);
                 sw = File.AppendText(filepath);
-                sw.WriteLine("\n" + logType + "#" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss: ") + msg + "\n");
+                sw.WriteLine(logType + "#" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss: ") + msg + "\n");
             }
             catch
             { }
@@ -42,6 +42,7 @@ namespace TyModel.Model
     {
         ClipboardError,
         ConfigError,
-        Error
+        Error,
+        Info
     }
 }

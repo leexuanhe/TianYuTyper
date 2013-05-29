@@ -190,8 +190,8 @@ namespace TyModel.Data
                     break;
 
             }
-            var re = (关连值.ToString() == "0" || 关连值.ToString() == "" && 为空不显示) ? "" : desc + val;
-            return re;
+            var re = (关连值.ToString() == "0" && 关连值.ToString() == "" && 为空不显示) ? "" : desc + val;
+            return re.Trim();
         }
     }
 

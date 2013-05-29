@@ -30,6 +30,7 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvBlockList = new System.Windows.Forms.DataGridView();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewButtonColumn();
@@ -56,6 +57,7 @@
             this.dgvBlockList.ColumnHeadersHeight = 24;
             this.dgvBlockList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvBlockList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column4,
             this.Column3,
             this.Column1,
             this.Column2});
@@ -73,10 +75,15 @@
             this.dgvBlockList.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black;
             this.dgvBlockList.RowTemplate.Height = 24;
             this.dgvBlockList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvBlockList.Size = new System.Drawing.Size(340, 261);
+            this.dgvBlockList.Size = new System.Drawing.Size(364, 261);
             this.dgvBlockList.TabIndex = 0;
             this.dgvBlockList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBlockList_CellContentClick);
             this.dgvBlockList.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvBlockList_CellFormatting);
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "名单";
+            this.Column4.Name = "Column4";
             // 
             // Column3
             // 
@@ -104,11 +111,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(360, 295);
+            this.ClientSize = new System.Drawing.Size(384, 295);
             this.Controls.Add(this.dgvBlockList);
             this.DoubleBuffered = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(400, 333);
             this.Name = "BlockListForm";
             this.Padding = new System.Windows.Forms.Padding(10, 24, 10, 10);
             this.ShowIcon = false;
@@ -125,6 +133,7 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dgvBlockList;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewButtonColumn Column2;

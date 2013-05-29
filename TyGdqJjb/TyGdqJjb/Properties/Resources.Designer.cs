@@ -68,5 +68,15 @@ namespace TyGdqJjb.Properties {
                 return ResourceManager.GetString("MainForm_DgetSourceModel_TypeEnd_TypeAchievementDic_Error", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 外观图标22x22 {
+            get {
+                object obj = ResourceManager.GetObject("外观图标22x22", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

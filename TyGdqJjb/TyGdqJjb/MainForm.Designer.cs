@@ -30,9 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.splitContainerMain = new System.Windows.Forms.SplitContainer();
-            this.panelHead = new System.Windows.Forms.Panel();
-            this.btnSet = new System.Windows.Forms.LinkLabel();
-            this.headPanel1 = new TyGdqJjb.TyControls.HeadPanel();
             this.richTextBoxEx1 = new TyGdqJjb.TyControls.RichTextBoxEx();
             this.DrightMenu = new TyGdqJjb.TyControls.RightMenu();
             this.载文ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -41,19 +38,24 @@
             this.背景色ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.打对色ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.打错色ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.最高停留色ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.回改色ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.textBoxEx1 = new TyGdqJjb.TyControls.TextBoxEx();
             this.GrightMenu = new TyGdqJjb.TyControls.RightMenu();
             this.重打ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.外观ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.字体ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.背景色ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.panelHead = new System.Windows.Forms.Panel();
+            this.headPanel1 = new TyGdqJjb.TyControls.HeadPanel();
+            this.btnSet = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
             this.splitContainerMain.Panel1.SuspendLayout();
             this.splitContainerMain.Panel2.SuspendLayout();
             this.splitContainerMain.SuspendLayout();
-            this.panelHead.SuspendLayout();
             this.DrightMenu.SuspendLayout();
             this.GrightMenu.SuspendLayout();
+            this.panelHead.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainerMain
@@ -80,43 +82,6 @@
             this.splitContainerMain.TabIndex = 1;
             this.splitContainerMain.TabStop = false;
             // 
-            // panelHead
-            // 
-            this.panelHead.Controls.Add(this.headPanel1);
-            this.panelHead.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelHead.Location = new System.Drawing.Point(10, 30);
-            this.panelHead.Margin = new System.Windows.Forms.Padding(3, 3, 3, 4);
-            this.panelHead.Name = "panelHead";
-            this.panelHead.Size = new System.Drawing.Size(406, 25);
-            this.panelHead.TabIndex = 3;
-            // 
-            // btnSet
-            // 
-            this.btnSet.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.btnSet.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSet.AutoSize = true;
-            this.btnSet.Font = new System.Drawing.Font("微软雅黑", 9.5F);
-            this.btnSet.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.btnSet.LinkColor = System.Drawing.Color.Silver;
-            this.btnSet.Location = new System.Drawing.Point(385, 11);
-            this.btnSet.Name = "btnSet";
-            this.btnSet.Size = new System.Drawing.Size(35, 19);
-            this.btnSet.TabIndex = 6;
-            this.btnSet.TabStop = true;
-            this.btnSet.Text = "设置";
-            this.btnSet.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.btnSet_LinkClicked);
-            // 
-            // headPanel1
-            // 
-            this.headPanel1.BackColor = System.Drawing.Color.White;
-            this.headPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.headPanel1.Location = new System.Drawing.Point(0, 0);
-            this.headPanel1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.headPanel1.Name = "headPanel1";
-            this.headPanel1.Size = new System.Drawing.Size(406, 25);
-            this.headPanel1.TabIndex = 2;
-            this.headPanel1.Title = "未设置";
-            // 
             // richTextBoxEx1
             // 
             this.richTextBoxEx1.BackColor = System.Drawing.Color.White;
@@ -135,16 +100,17 @@
             // DrightMenu
             // 
             this.DrightMenu.Font = new System.Drawing.Font("微软雅黑", 9.5F);
+            this.DrightMenu.ImageScalingSize = new System.Drawing.Size(22, 22);
             this.DrightMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.载文ToolStripMenuItem,
             this.外观ToolStripMenuItem1});
             this.DrightMenu.Name = "DrightMenu";
-            this.DrightMenu.Size = new System.Drawing.Size(105, 52);
+            this.DrightMenu.Size = new System.Drawing.Size(111, 60);
             // 
             // 载文ToolStripMenuItem
             // 
             this.载文ToolStripMenuItem.Name = "载文ToolStripMenuItem";
-            this.载文ToolStripMenuItem.Size = new System.Drawing.Size(104, 24);
+            this.载文ToolStripMenuItem.Size = new System.Drawing.Size(110, 28);
             this.载文ToolStripMenuItem.Text = "载文";
             this.载文ToolStripMenuItem.Click += new System.EventHandler(this.载文ToolStripMenuItem_Click);
             // 
@@ -154,38 +120,55 @@
             this.字体ToolStripMenuItem1,
             this.背景色ToolStripMenuItem,
             this.打对色ToolStripMenuItem,
-            this.打错色ToolStripMenuItem});
+            this.打错色ToolStripMenuItem,
+            this.最高停留色ToolStripMenuItem,
+            this.回改色ToolStripMenuItem});
+            this.外观ToolStripMenuItem1.Image = global::TyGdqJjb.Properties.Resources.外观图标22x22;
             this.外观ToolStripMenuItem1.Name = "外观ToolStripMenuItem1";
-            this.外观ToolStripMenuItem1.Size = new System.Drawing.Size(104, 24);
+            this.外观ToolStripMenuItem1.Size = new System.Drawing.Size(110, 28);
             this.外观ToolStripMenuItem1.Text = "外观";
             // 
             // 字体ToolStripMenuItem1
             // 
             this.字体ToolStripMenuItem1.Name = "字体ToolStripMenuItem1";
-            this.字体ToolStripMenuItem1.Size = new System.Drawing.Size(117, 24);
+            this.字体ToolStripMenuItem1.Size = new System.Drawing.Size(152, 24);
             this.字体ToolStripMenuItem1.Text = "字体";
             this.字体ToolStripMenuItem1.Click += new System.EventHandler(this.字体ToolStripMenuItem1_Click);
             // 
             // 背景色ToolStripMenuItem
             // 
             this.背景色ToolStripMenuItem.Name = "背景色ToolStripMenuItem";
-            this.背景色ToolStripMenuItem.Size = new System.Drawing.Size(117, 24);
+            this.背景色ToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
             this.背景色ToolStripMenuItem.Text = "背景色";
             this.背景色ToolStripMenuItem.Click += new System.EventHandler(this.背景色ToolStripMenuItem_Click);
             // 
             // 打对色ToolStripMenuItem
             // 
             this.打对色ToolStripMenuItem.Name = "打对色ToolStripMenuItem";
-            this.打对色ToolStripMenuItem.Size = new System.Drawing.Size(117, 24);
+            this.打对色ToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
             this.打对色ToolStripMenuItem.Text = "打对色";
             this.打对色ToolStripMenuItem.Click += new System.EventHandler(this.打对色ToolStripMenuItem_Click);
             // 
             // 打错色ToolStripMenuItem
             // 
             this.打错色ToolStripMenuItem.Name = "打错色ToolStripMenuItem";
-            this.打错色ToolStripMenuItem.Size = new System.Drawing.Size(117, 24);
+            this.打错色ToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
             this.打错色ToolStripMenuItem.Text = "打错色";
             this.打错色ToolStripMenuItem.Click += new System.EventHandler(this.打错色ToolStripMenuItem_Click);
+            // 
+            // 最高停留色ToolStripMenuItem
+            // 
+            this.最高停留色ToolStripMenuItem.Name = "最高停留色ToolStripMenuItem";
+            this.最高停留色ToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.最高停留色ToolStripMenuItem.Text = "最高停留色";
+            this.最高停留色ToolStripMenuItem.Click += new System.EventHandler(this.最高停留色ToolStripMenuItem_Click);
+            // 
+            // 回改色ToolStripMenuItem
+            // 
+            this.回改色ToolStripMenuItem.Name = "回改色ToolStripMenuItem";
+            this.回改色ToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+            this.回改色ToolStripMenuItem.Text = "回改色";
+            this.回改色ToolStripMenuItem.Click += new System.EventHandler(this.回改色ToolStripMenuItem_Click);
             // 
             // textBoxEx1
             // 
@@ -203,16 +186,17 @@
             // GrightMenu
             // 
             this.GrightMenu.Font = new System.Drawing.Font("微软雅黑", 9.5F);
+            this.GrightMenu.ImageScalingSize = new System.Drawing.Size(22, 22);
             this.GrightMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.重打ToolStripMenuItem,
             this.外观ToolStripMenuItem});
             this.GrightMenu.Name = "GrightMenu";
-            this.GrightMenu.Size = new System.Drawing.Size(105, 52);
+            this.GrightMenu.Size = new System.Drawing.Size(159, 82);
             // 
             // 重打ToolStripMenuItem
             // 
             this.重打ToolStripMenuItem.Name = "重打ToolStripMenuItem";
-            this.重打ToolStripMenuItem.Size = new System.Drawing.Size(104, 24);
+            this.重打ToolStripMenuItem.Size = new System.Drawing.Size(158, 28);
             this.重打ToolStripMenuItem.Text = "重打";
             this.重打ToolStripMenuItem.Click += new System.EventHandler(this.重打ToolStripMenuItem_Click);
             // 
@@ -221,23 +205,61 @@
             this.外观ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.字体ToolStripMenuItem,
             this.背景色ToolStripMenuItem1});
+            this.外观ToolStripMenuItem.Image = global::TyGdqJjb.Properties.Resources.外观图标22x22;
             this.外观ToolStripMenuItem.Name = "外观ToolStripMenuItem";
-            this.外观ToolStripMenuItem.Size = new System.Drawing.Size(104, 24);
+            this.外观ToolStripMenuItem.Size = new System.Drawing.Size(158, 28);
             this.外观ToolStripMenuItem.Text = "外观";
             // 
             // 字体ToolStripMenuItem
             // 
             this.字体ToolStripMenuItem.Name = "字体ToolStripMenuItem";
-            this.字体ToolStripMenuItem.Size = new System.Drawing.Size(117, 24);
+            this.字体ToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
             this.字体ToolStripMenuItem.Text = "字体";
             this.字体ToolStripMenuItem.Click += new System.EventHandler(this.字体ToolStripMenuItem_Click);
             // 
             // 背景色ToolStripMenuItem1
             // 
             this.背景色ToolStripMenuItem1.Name = "背景色ToolStripMenuItem1";
-            this.背景色ToolStripMenuItem1.Size = new System.Drawing.Size(117, 24);
+            this.背景色ToolStripMenuItem1.Size = new System.Drawing.Size(152, 24);
             this.背景色ToolStripMenuItem1.Text = "背景色";
             this.背景色ToolStripMenuItem1.Click += new System.EventHandler(this.背景色ToolStripMenuItem1_Click);
+            // 
+            // panelHead
+            // 
+            this.panelHead.Controls.Add(this.headPanel1);
+            this.panelHead.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelHead.Location = new System.Drawing.Point(10, 30);
+            this.panelHead.Margin = new System.Windows.Forms.Padding(3, 3, 3, 4);
+            this.panelHead.Name = "panelHead";
+            this.panelHead.Size = new System.Drawing.Size(406, 25);
+            this.panelHead.TabIndex = 3;
+            // 
+            // headPanel1
+            // 
+            this.headPanel1.BackColor = System.Drawing.Color.White;
+            this.headPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.headPanel1.Location = new System.Drawing.Point(0, 0);
+            this.headPanel1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.headPanel1.Name = "headPanel1";
+            this.headPanel1.Size = new System.Drawing.Size(406, 25);
+            this.headPanel1.TabIndex = 2;
+            this.headPanel1.Title = "未设置";
+            // 
+            // btnSet
+            // 
+            this.btnSet.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.btnSet.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSet.AutoSize = true;
+            this.btnSet.Font = new System.Drawing.Font("微软雅黑", 9.5F);
+            this.btnSet.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
+            this.btnSet.LinkColor = System.Drawing.Color.Silver;
+            this.btnSet.Location = new System.Drawing.Point(385, 11);
+            this.btnSet.Name = "btnSet";
+            this.btnSet.Size = new System.Drawing.Size(35, 19);
+            this.btnSet.TabIndex = 6;
+            this.btnSet.TabStop = true;
+            this.btnSet.Text = "设置";
+            this.btnSet.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.btnSet_LinkClicked);
             // 
             // MainForm
             // 
@@ -262,9 +284,9 @@
             this.splitContainerMain.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).EndInit();
             this.splitContainerMain.ResumeLayout(false);
-            this.panelHead.ResumeLayout(false);
             this.DrightMenu.ResumeLayout(false);
             this.GrightMenu.ResumeLayout(false);
+            this.panelHead.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -290,6 +312,8 @@
         private System.Windows.Forms.ToolStripMenuItem 打对色ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 打错色ToolStripMenuItem;
         private System.Windows.Forms.LinkLabel btnSet;
+        private System.Windows.Forms.ToolStripMenuItem 最高停留色ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 回改色ToolStripMenuItem;
     }
 }
 

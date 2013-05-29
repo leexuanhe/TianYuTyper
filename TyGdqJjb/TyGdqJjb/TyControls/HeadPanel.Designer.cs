@@ -34,6 +34,7 @@
             // HrightMenu
             // 
             this.HrightMenu.Font = new System.Drawing.Font("微软雅黑", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.HrightMenu.MaximumSize = new System.Drawing.Size(0, 300);
             this.HrightMenu.Name = "HrightMenu";
             this.HrightMenu.Size = new System.Drawing.Size(61, 4);
             // 
