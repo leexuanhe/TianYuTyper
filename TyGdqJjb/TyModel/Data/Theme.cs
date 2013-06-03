@@ -17,6 +17,7 @@ namespace TyModel.Data
         private Color _groupBack = Color.Green;
         private Color _maxStay = Color.Tomato;
         private Color _backSpaceColor = Color.LightGreen;
+        private Color _progressBack = Color.SteelBlue;
 
         #region 对照区
 
@@ -102,6 +103,12 @@ namespace TyModel.Data
         #endregion
 
         #region 顶部栏区域
+        public Color ProgressBack
+        {
+            set { _progressBack = value; }
+            get { return _progressBack; }
+        }
+
         public Color DuanHaoBack
         {
             set { _duanHaoBack = value; }

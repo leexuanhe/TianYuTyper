@@ -63,6 +63,7 @@ namespace TyModel.Data
         public TypeAchievementConfig TypeAchievementConfig = new TypeAchievementConfig();
         private bool _lastErrorNotSend = true;
         private bool _isUseWhiteList = false;
+        private string _userSignWrite = "";//签名
 
         /// <summary>
         /// 最后一次输入错了，则 触发完成
@@ -71,6 +72,12 @@ namespace TyModel.Data
         {
             set { _lastErrorNotSend = value; }
             get { return _lastErrorNotSend; }
+        }
+
+        public string UserSignWrite
+        {
+            set { _userSignWrite = value; }
+            get { return _userSignWrite; }
         }
 
         //var r = new Regex(@"QQ20\d{2}");

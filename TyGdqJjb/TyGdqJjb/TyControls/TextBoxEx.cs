@@ -29,7 +29,7 @@ namespace TyGdqJjb.TyControls
                     this.MaxLength = TypeData.Instance.TypeText.Length;
                     Array.Clear(_last,0,2);
                     this.TextChanged += TextBoxEx_TextChanged;
-                    dgetSourceModel.Progress = 0;
+                    TypeData.Instance.Progress = 0;
                     TypeFlag = 0;
                     TypeData.Instance.ImfactTextCount = TypeData.Instance.TypeText.Length;
                     TempData.Instance.BackReport.Clear();
@@ -188,7 +188,7 @@ namespace TyGdqJjb.TyControls
                         }
                     }
                     //进度条
-                    DgetSourceModel.Progress = textType.Length*1.0/text.Length;
+                    TypeData.Instance.Progress = textType.Length*1.0/text.Length;
                     //打完了
                     if (textType.Length >= text.Length)
                     {

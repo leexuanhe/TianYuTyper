@@ -84,7 +84,7 @@ namespace TyGdqJjb
                     TypeData.Instance.GetTypeAchievement().AchievementDic["击键"].关连值 = TypeData.Instance.KickTimes*1.0/
                                                                                       use;
                     TypeData.Instance.GetTypeAchievement().AchievementDic["码长"].关连值 = TypeData.Instance.KickTimes*1.0/
-                                                                                      TypeData.Instance.TypeText.Length;
+                                                                                      TypeData.Instance.ImfactTextCount;
                     TypeData.Instance.GetTypeAchievement().AchievementDic["回改"].关连值 = TypeData.Instance.BackTimes;
                     TypeData.Instance.GetTypeAchievement().AchievementDic["错字"].关连值 = TypeData.Instance.ErrorWords.Count;
                     TypeData.Instance.GetTypeAchievement().AchievementDic["键数"].关连值 = TypeData.Instance.KickTimes;
@@ -261,6 +261,10 @@ namespace TyGdqJjb
                     break;
                 case Keys.F5:
                     GroupOprationModel.Instance.RefreshGroup();
+                    if (string.IsNullOrEmpty(GlobalModel.Instance.GroupData.Now))
+                    {
+                        headPanel1.GroupLeftClick();
+                    }
                     break;
             }
         }

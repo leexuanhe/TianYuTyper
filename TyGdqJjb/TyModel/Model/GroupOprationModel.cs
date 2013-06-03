@@ -21,7 +21,8 @@ namespace TyModel.Model
                 "更换房间头像",
                 "网络设置",
                 "消息管理器",
-                "QQ数据线"
+                "QQ数据线",
+                "视频会话"
             };
 
         /// <summary>
@@ -67,7 +68,7 @@ namespace TyModel.Model
                 {
                     GetWindowText(hwnd, sb, sb.Capacity);
                     var name = sb.ToString().Trim();
-                    if (name.Length > 0 && !BlockGroupList.Exists(o => o == name))
+                    if (name.Length > 0 && !BlockGroupList.Exists(o => o.Contains(name)))
                     {
                         //启用白名单功能
                         if (GlobalModel.Instance.Config.IsUseWhiteList)

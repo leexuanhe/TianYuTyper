@@ -25,6 +25,9 @@ namespace TyModel.Data
         /// 成绩数据
         /// </summary>
         private TypeAchievement _typeAchievement = new TypeAchievement();
+
+        private double _progress;
+
         public TypeAchievement GetTypeAchievement()
         {
             return _typeAchievement;
@@ -109,6 +112,20 @@ namespace TyModel.Data
             ErrorWords.Clear();
         }
 
+        public delegate void ChangeProgess(double per);
+
+        /// <summary>
+        /// 进度条
+        /// </summary>
+        public event ChangeProgess ProgressChange;
+
+        public double Progress
+        {
+            set { _progress = value;
+                ProgressChange(value);
+            }
+            get { return _progress; }
+        }
     }
 
     public enum TypeState

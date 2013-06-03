@@ -14,16 +14,7 @@ namespace TyGdqJjb.TyModels
     /// </summary>
     public class DgetSourceModel:ITypeState
     {
-        private double _progress = 0;
         public MainForm MainForm { set; get; }
-        public double Progress
-        {
-            set { _progress = value; MainForm.Invalidate(_progressRect);}
-            get { return _progress; }
-        }
-
-        private readonly Rectangle _progressRect;
-        /// <summary>
         /// 跟打开始
         /// </summary>
         public event EventTypeHandler TypeStart;
@@ -70,21 +61,9 @@ namespace TyGdqJjb.TyModels
         public DgetSourceModel(RichTextBoxEx richTextBoxEx,MainForm mainForm)
         {
             this.MainForm = mainForm;
-            this._progressRect = new Rectangle(10, 56, MainForm.Width - 36, 2);
-            MainForm.Paint += MainForm_Paint;
             this.RichTextBoxEx = richTextBoxEx;
             //this.RichTextBoxEx.TextChanged += RichTextBoxEx_TextChanged;
         }
-
-        /// <summary>
-        /// 画进度条
-        /// </summary>
-        void MainForm_Paint(object sender, System.Windows.Forms.PaintEventArgs e)
-        {
-            e.Graphics.FillRectangle(new SolidBrush(GlobalModel.Instance.Theme.ProgressBgColor), _progressRect.X, _progressRect.Y,
-                                            (int)(_progressRect.Width * Progress), _progressRect.Height);
-        }
-
         //void RichTextBoxEx_TextChanged(object sender, EventArgs e)
         //{
         //    TypeData.Instance.TypeText = this.RichTextBoxEx.Text; //填入数据

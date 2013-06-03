@@ -19,6 +19,12 @@ namespace TyGdqJjb.TyControls
         private Rectangle _titleRect;
         private string _articleTitle = "无标题";
         private int _count = 0;
+        private double _progress = 0;
+        private double Progress
+        {
+            set { _progress = value; Invalidate();}
+            get { return _progress; }
+        }
 
         public HeadPanel()
         {
@@ -27,6 +33,8 @@ namespace TyGdqJjb.TyControls
             if (TypeData.Instance != null)
             {
                 _count = TypeData.Instance.TypeText.Length;
+                //进度条
+                TypeData.Instance.ProgressChange += per => Progress = per;
             }
             if (TypeData.Instance != null)
                 TypeData.Instance.GetTextInit += (sender, args) =>
@@ -73,6 +81,13 @@ namespace TyGdqJjb.TyControls
         {
             base.OnPaint(e);
             if (GlobalModel.Instance == null) return;
+            //进度
+            if (Progress != 0)
+            {
+                e.Graphics.FillRectangle(new SolidBrush(GlobalModel.Instance.Theme.ProgressBack), 2,
+                                         e.ClipRectangle.Height - 2, (int) ((e.ClipRectangle.Width - 2)*Progress),
+                                         1);
+            }
             var sf = new StringFormat { Alignment = StringAlignment.Center };
 
             SizeF title_size = e.Graphics.MeasureString(Title, _font);
@@ -146,80 +161,13 @@ namespace TyGdqJjb.TyControls
             #region 群列表
             if (_titleRect.Contains(l))
             {
-                HrightMenu.Items.Clear();
-                this.HrightMenu.Font = new Font(this.HrightMenu.Font.FontFamily, 9f);
                 switch (e.Button)
                 {
-                    #region 显示群
                     case MouseButtons.Left:
-                        {
-
-                            var getGroup = GroupOprationModel.Instance.UpdateGroup();
-                            if (getGroup == null) return;
-                            if (getGroup.Count == 0)
-                            {
-                                var temp = "未找到群";
-                                if (GroupOprationModel.Instance.UserBlockCount != 0 ||
-                                    GroupOprationModel.Instance.SystemBlockCount != 0)
-                                {
-                                    var system = GroupOprationModel.Instance.SystemBlockCount == 0
-                                                     ? ""
-                                                     : string.Format("系统屏蔽：{0}个\n",GroupOprationModel.Instance.SystemBlockCount);
-                                    var user = GroupOprationModel.Instance.UserBlockCount == 0
-                                                     ? ""
-                                                     : string.Format("用户屏蔽：{0}个", GroupOprationModel.Instance.UserBlockCount);
-                                    temp = string.Format(system + user);
-                                }
-                                HrightMenu.Items.Add(temp,null,ListBlockList);
-                                HrightMenu.Show(this, _titleRect.X, Height);
-                            }
-                            else
-                            {
-                                foreach (var tool in getGroup.Select(@group => new ToolStripMenuItem {Text = @group.Name}))
-                                {
-                                    if (tool.Text == GlobalModel.Instance.GroupData.Now)
-                                        tool.CheckState = CheckState.Checked;
-                                    tool.Click += SetGroupTitle;
-                                    HrightMenu.Items.Add(tool);
-                                }
-                                //因白名单的原因而被屏蔽的群
-                                if (GroupOprationModel.Instance.UserWhiteCount > 0)
-                                {
-                                    HrightMenu.Items.Add("-");
-                                    HrightMenu.Items.Add("点我取消白名单", null, delegate
-                                    {
-                                        GlobalModel.Instance.Config.IsUseWhiteList = false;
-                                        GroupOprationModel.Instance.RefreshGroup();
-                                    });
-                                    HrightMenu.Items.Add("白名单屏蔽" + GroupOprationModel.Instance.UserWhiteCount + "个群");
-                                    if (GroupOprationModel.Instance.SystemBlockCount > 0)
-                                        HrightMenu.Items.Add("系统屏蔽" + GroupOprationModel.Instance.SystemBlockCount + "个");
-                                }
-                                HrightMenu.Show(this, _titleRect.X, Height);
-                            }
-                        }
+                        GroupLeftClick();
                         break;
-                    #endregion
                     case MouseButtons.Right:
-                        if (GlobalModel.Instance.GroupData.Now != null)
-                        {
-                            HrightMenu.Items.Add("添加至黑名单", null, BlockGroup);
-                            HrightMenu.Items.Add("添加至白名单", null, WhiteGroup);
-                            HrightMenu.Items.Add("-");
-                        }
-                        var activeWhite = new ToolStripMenuItem
-                            {
-                                Text = "启用白名单",
-                                CheckState = GlobalModel.Instance.Config.IsUseWhiteList
-                                                 ? CheckState.Checked
-                                                 : CheckState.Unchecked
-                            };
-                        activeWhite.Click += ActiveWhiteList;
-                        HrightMenu.Items.Add(activeWhite);
-                        if (HrightMenu.Items.Count > 0)
-                            HrightMenu.Items.Add("-");
-                        HrightMenu.Items.Add("查看名单列表", null, ListBlockList);
-                        HrightMenu.Show(this, _titleRect.X, Height);
+                        GroupRightClick();
                         break;
                 }
             }
@@ -245,7 +193,100 @@ namespace TyGdqJjb.TyControls
             }
         }
 
-       
+        public void GroupRightClick()
+        {
+            HrightMenu.Items.Clear();
+            this.HrightMenu.Font = new Font(this.HrightMenu.Font.FontFamily, 9f);
+            if (GlobalModel.Instance.GroupData.Now != null)
+            {
+                HrightMenu.Items.Add("添加至黑名单", null, BlockGroup);
+                HrightMenu.Items.Add("添加至白名单", null, WhiteGroup);
+                HrightMenu.Items.Add("-");
+            }
+            var activeWhite = new ToolStripMenuItem
+            {
+                Text = "启用白名单",
+                CheckState = GlobalModel.Instance.Config.IsUseWhiteList
+                                 ? CheckState.Checked
+                                 : CheckState.Unchecked
+            };
+            activeWhite.Click += ActiveWhiteList;
+            HrightMenu.Items.Add(activeWhite);
+            if (HrightMenu.Items.Count > 0)
+                HrightMenu.Items.Add("-");
+            HrightMenu.Items.Add("查看名单列表", null, ListBlockList);
+            HrightMenu.Show(this, _titleRect.X, Height);
+        }
+       /// <summary>
+       /// 群左键
+       /// </summary>
+       public void GroupLeftClick()
+       {
+           HrightMenu.Items.Clear();
+           this.HrightMenu.Font = new Font(this.HrightMenu.Font.FontFamily, 9f);
+           var getGroup = GroupOprationModel.Instance.UpdateGroup();
+           if (getGroup == null) return;
+           if (getGroup.Count == 0)
+           {
+               var temp = "未找到群";
+               if (GlobalModel.Instance.Config.IsUseWhiteList)
+               {
+                   if (GroupOprationModel.Instance.UserWhiteCount != 0)
+                   {
+                       temp = string.Format("白名单屏蔽：{0}个\n点我取消白名单",
+                                                 GroupOprationModel.Instance.UserWhiteCount);
+                   }
+                   HrightMenu.Items.Add(temp, null, delegate
+                   {
+                       GlobalModel.Instance.Config.IsUseWhiteList = false;
+                       GroupOprationModel.Instance.RefreshGroup();
+                   });
+               }
+               else
+               {
+                   if (GroupOprationModel.Instance.UserBlockCount != 0 ||
+                       GroupOprationModel.Instance.SystemBlockCount != 0)
+                   {
+                       var system = GroupOprationModel.Instance.SystemBlockCount == 0
+                                        ? ""
+                                        : string.Format("系统屏蔽：{0}个\n",
+                                                        GroupOprationModel.Instance.SystemBlockCount);
+                       var user = GroupOprationModel.Instance.UserBlockCount == 0
+                                      ? ""
+                                      : string.Format("用户屏蔽：{0}个",
+                                                      GroupOprationModel.Instance.UserBlockCount);
+                       temp = string.Format(system + user);
+                       HrightMenu.Items.Add(temp, null, ListBlockList);
+                   }
+               }
+
+               HrightMenu.Show(this, _titleRect.X, Height);
+           }
+           else
+           {
+               foreach (var tool in getGroup.Select(@group => new ToolStripMenuItem { Text = @group.Name }))
+               {
+                   if (tool.Text == GlobalModel.Instance.GroupData.Now)
+                       tool.CheckState = CheckState.Checked;
+                   tool.Click += SetGroupTitle;
+                   HrightMenu.Items.Add(tool);
+               }
+               //因白名单的原因而被屏蔽的群
+               if (GroupOprationModel.Instance.UserWhiteCount > 0)
+               {
+                   HrightMenu.Items.Add("-");
+                   HrightMenu.Items.Add("[&C]点我取消白名单", null, delegate
+                   {
+                       GlobalModel.Instance.Config.IsUseWhiteList = false;
+                       GroupOprationModel.Instance.RefreshGroup();
+                   });
+                   HrightMenu.Items.Add("白名单屏蔽" + GroupOprationModel.Instance.UserWhiteCount + "个群");
+                   if (GroupOprationModel.Instance.SystemBlockCount > 0)
+                       HrightMenu.Items.Add("系统屏蔽" + GroupOprationModel.Instance.SystemBlockCount + "个");
+               }
+               HrightMenu.Show(this, _titleRect.X, Height);
+           }
+       }
         private void SetDuanHaoBackColor(object sender, EventArgs e)
         {
             //SetColor("段号","Back",);

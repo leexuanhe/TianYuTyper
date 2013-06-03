@@ -93,6 +93,9 @@ namespace TyModel.Data
             AchievementDic = AchievementDic.OrderBy(o => o.Value.优先级).ToDictionary(pair => pair.Key, pair => pair.Value);
         }
 
+        /// <summary>
+        /// 输入法前处理
+        /// </summary>
         public void InputOperation()
         {
             //能否被空格分隔
@@ -138,6 +141,11 @@ namespace TyModel.Data
             foreach (var typeType in AchievementDic.Where(typeType => typeType.Value.显示))
             {
                 str.Append(typeType.Value + " ");
+            }
+            //签名
+            if (!string.IsNullOrEmpty(GlobalModel.Instance.Config.UserSignWrite))
+            {
+                str.Append("个签：" + GlobalModel.Instance.Config.UserSignWrite.Trim() + " ");
             }
             //版本号
             str.Append(GlobalModel.Instance.FormInfo.LittleVersion);
