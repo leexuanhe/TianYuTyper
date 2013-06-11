@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace TyGdqJjb.TyControls
@@ -32,6 +28,12 @@ namespace TyGdqJjb.TyControls
         }
 
         private Style _buttonStyle = Style.Normal;
+
+        private Style ButtonStyle
+        {
+            set { _buttonStyle = value; Invalidate(); }
+            get { return _buttonStyle; }
+        }
 
         [DisplayName(@"正常状态")]
         public Bitmap Normal { set; get; }
@@ -64,24 +66,20 @@ namespace TyGdqJjb.TyControls
         {
             MouseEnter += (sender, args) =>
                 {
-                    _buttonStyle = Style.Moving;
-                    Invalidate();
+                    ButtonStyle = Style.Moving;
                 };
             MouseDown += (sender, args) =>
                 {
                     if (args.Button == MouseButtons.Left)
-                        _buttonStyle = Style.Down;
-                    Invalidate();
+                        ButtonStyle = Style.Down;
                 };
             MouseLeave += (sender, args) =>
                 {
-                    _buttonStyle = Style.Normal;
-                    Invalidate();
+                    ButtonStyle = Style.Normal;
                 };
             MouseUp += (sender, args) =>
                 {
-                    _buttonStyle = Style.Up;
-                    Invalidate();
+                    ButtonStyle = Style.Up;
                 };
             MouseClick += (sender, args) =>
                 {
@@ -108,7 +106,7 @@ namespace TyGdqJjb.TyControls
                     e.Graphics.DrawImage(Unenable, 0, 0, Unenable.Width, Unenable.Height);
                 return;
             }
-            switch (_buttonStyle)
+            switch (ButtonStyle)
             {
                 case Style.Up:
                 case Style.Normal:

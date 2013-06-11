@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -37,6 +38,15 @@ namespace TyGdqJjb.TyData
 
         //跟打报告
         public List<TypeReportData> TypeReport = new List<TypeReportData>();
+
+        public Bitmap GetColor(Color color)
+        {
+            var bmp = new Bitmap(22, 22);
+            var g = Graphics.FromImage(bmp);
+            g.FillRectangle(new SolidBrush(color), 0, 0, bmp.Width, bmp.Height);
+            g.DrawRectangle(new Pen(Color.Black), 0, 0, bmp.Width - 1, bmp.Height - 1);
+            return bmp;
+        }
     }
 
     public class TypeReportData

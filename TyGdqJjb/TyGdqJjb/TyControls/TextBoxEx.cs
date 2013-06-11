@@ -31,7 +31,6 @@ namespace TyGdqJjb.TyControls
                     this.TextChanged += TextBoxEx_TextChanged;
                     TypeData.Instance.Progress = 0;
                     TypeFlag = 0;
-                    TypeData.Instance.ImfactTextCount = TypeData.Instance.TypeText.Length;
                     TempData.Instance.BackReport.Clear();
                     TempData.Instance.TypeReport.Clear();
                     this.Focus();
@@ -89,14 +88,6 @@ namespace TyGdqJjb.TyControls
                     TypeFlag++;
                     var textLenNow = textType.Length;
                     var textLen = text.Length;
-                    if (TypeFlag == 1)
-                    {
-                        DgetSourceModel.Start(TypeState.Typing, DateTime.Now);
-                        TypeData.Instance.ImfactTextCount = TypeData.Instance.TypeText.Length - textLenNow;
-                        TypeData.Instance.KickTimes = 0;
-                        _lastTime[1] = DateTime.Now;//起打时间
-                        _lastKick[1] = 0;
-                    }
                     //自动跳行
                     int getstart = this.DgetSourceModel.RichTextBoxEx.GetLineFromCharIndex(textLenNow);
                     //int getExend = this.DgetSourceModel.RichTextBoxEx.GetLineFromCharIndex(TextLen - 1);//获取最后一行的行号 也就是 总行号
@@ -251,7 +242,16 @@ namespace TyGdqJjb.TyControls
         /// <param name="e"></param>
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            TypeData.Instance.KickTimes++;
+            if (e.KeyCode != Keys.F3 && e.KeyCode != Keys.F4 && e.KeyCode != Keys.F5)
+            {
+                TypeData.Instance.KickTimes++;
+                if (TypeData.Instance.KickTimes == 1)
+                {
+                    DgetSourceModel.Start(TypeState.Typing, DateTime.Now);
+                    _lastTime[1] = DateTime.Now; //起打时间
+                    _lastKick[1] = 0;
+                }
+            }
             if (e.KeyCode == Keys.Back)
             {
                 TypeData.Instance.BackTimes++;

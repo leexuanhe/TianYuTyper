@@ -32,28 +32,47 @@ namespace TyGdqJjb
             richTextBoxEx1.SetDgetSourceModel(DgetSourceModel);
             TypeData.Instance.Init += (o, args) => this.Activate();
             DgetSourceModel.TypeEnd += DgetSourceModel_TypeEnd;
+            DgetSourceModel.TypeStart += DgetSourceModel_TypeStart;
             //获取群
             GroupOprationModel.Instance.RefreshGroup();
             //启动输入法
             this.InputOperationModel = new InputOperationModel(this.textBoxEx1.Handle);
-            //this.InputOperationModel.InputLan(TypeData.Instance.GetTypeAchievement().AchievementDic["输入法"].关连值.ToString());
+            //this.InputOperationModel.InputLan(TypeData.Instance.GetTypeAchievement().AchievementDic["输入法"].TypeData.关连值.ToString());
         }
 
         private void Init()
         {
+            timer.Tick += timer_Tick;
             splitContainerMain.SplitterDistance = GlobalModel.Instance.Config.SplitDistance;
             richTextBoxEx1.Text = TypeData.Instance.TypeText;
             richTextBoxEx1.BackColorChanged +=
-                (sender, args) => 背景色ToolStripMenuItem.BackColor = this.richTextBoxEx1.BackColor;
+                (sender, args) => 背景色ToolStripMenuItem.Image = TempData.Instance.GetColor(this.richTextBoxEx1.BackColor);
             richTextBoxEx1.BackColor = GlobalModel.Instance.Theme.DBgColor;
-            this.textBoxEx1.BackColorChanged += (sender, args) => 背景色ToolStripMenuItem1.BackColor = this.textBoxEx1.BackColor;
+            this.textBoxEx1.BackColorChanged += (sender, args) => 背景色ToolStripMenuItem1.Image = TempData.Instance.GetColor(this.textBoxEx1.BackColor);
             字体ToolStripMenuItem1.Font = GlobalModel.Instance.Theme.DFont;
             字体ToolStripMenuItem.Font = GlobalModel.Instance.Theme.GFont;
-            打对色ToolStripMenuItem.ForeColor = GlobalModel.Instance.Theme.Right;
-            打错色ToolStripMenuItem.ForeColor = GlobalModel.Instance.Theme.Wrong;
-            最高停留色ToolStripMenuItem.ForeColor = GlobalModel.Instance.Theme.MaxStay;
-            回改色ToolStripMenuItem.ForeColor = GlobalModel.Instance.Theme.BackSpaceColor;
+            打对色ToolStripMenuItem.Image = TempData.Instance.GetColor(GlobalModel.Instance.Theme.Right);
+            打错色ToolStripMenuItem.Image = TempData.Instance.GetColor(GlobalModel.Instance.Theme.Wrong);
+            最高停留色ToolStripMenuItem.Image = TempData.Instance.GetColor(GlobalModel.Instance.Theme.MaxStay);
+            回改色ToolStripMenuItem.Image = TempData.Instance.GetColor(GlobalModel.Instance.Theme.BackSpaceColor);
         }
+
+        /// <summary>
+        /// 跟打开始
+        /// </summary>
+        void DgetSourceModel_TypeStart(TyInfo tyInfo, DateTime dateTime)
+        {
+            timer.Enabled = true;
+        }
+
+        /// <summary>
+        /// 时间更新
+        /// </summary>
+        void timer_Tick(object sender, EventArgs e)
+        {
+            this.lblTime.Text = ((int)(DateTime.Now - TypeData.Instance.StartTime).TotalSeconds).ToString("D4");
+        }
+
         /// <summary>
         /// 跟打完成
         /// </summary>
@@ -61,34 +80,39 @@ namespace TyGdqJjb
         {
             TypeData.Instance.EndTime = dateTime;
             TypeData.Instance.TypeState = tyInfo.TypeState;
-
+            timer.Enabled = false;
             //错字超出总字数百分之十此不发送
             if (TypeData.Instance.ErrorWords.Count > TypeData.Instance.TypeText.Length * 0.1) return;
-            //输入次数过少不发送
-            if (TypeData.Instance.ImfactTextCount <= 0)
-            {
-                TyLogModel.Instance.WriteLog(LogType.Info,
-                                             string.Format("\n实际值{0}\n字数值{1}\n", TypeData.Instance.ImfactTextCount,
-                                                           TypeData.Instance.TypeText.Length));
-                MessageBox.Show(@"数据过低，无法统计！");
-                return;
-            }
             var use = TypeData.Instance.TotalUseTime.TotalSeconds;
-            var realLen = TypeData.Instance.ImfactTextCount - TypeData.Instance.ErrorWords.Count*5;
+            var realLen = TypeData.Instance.TypeText.Length - TypeData.Instance.ErrorWords.Count*5;
             if (realLen > 0)
             {
-                TypeData.Instance.GetTypeAchievement().Speed2 = TypeData.Instance.ImfactTextCount * 60.0 / use;
+                TypeData.Instance.GetTypeAchievement().Speed2 = TypeData.Instance.TypeText.Length * 60.0 / use;
                 try
                 {
-                    TypeData.Instance.GetTypeAchievement().AchievementDic["速度"].关连值 = realLen*60.0/use;
-                    TypeData.Instance.GetTypeAchievement().AchievementDic["击键"].关连值 = TypeData.Instance.KickTimes*1.0/
+                    TypeData.Instance.GetTypeAchievement().AchievementDic["速度"].TypeData.关连值 = realLen*60.0/use;
+                    if (TempData.Instance.TypeReport.Count >= 5)
+                    {
+                        var useTime = TempData.Instance.TypeReport.Take(5).Sum(o => o.UseTime.TotalSeconds);
+                        var ziCount = TempData.Instance.TypeReport.Take(5).Sum(o => o.Word.Length);
+                        var jsCount = TempData.Instance.TypeReport.Take(5).Sum(o => o.Kicks);
+                        TypeData.Instance.GetTypeAchievement().AchievementDic["起步"].TypeData.关连值 =
+                            (ziCount*60.0/useTime).ToString("0.00") + "/" +
+                            (jsCount * 1.0/useTime).ToString("0.00") + "/" +
+                            (jsCount * 1.0/ziCount).ToString("0.00");
+                    }
+                    else
+                    {
+                        TypeData.Instance.GetTypeAchievement().AchievementDic["起步"].TypeData.关连值 = "";
+                    }
+                    TypeData.Instance.GetTypeAchievement().AchievementDic["击键"].TypeData.关连值 = TypeData.Instance.KickTimes*1.0/
                                                                                       use;
-                    TypeData.Instance.GetTypeAchievement().AchievementDic["码长"].关连值 = TypeData.Instance.KickTimes*1.0/
-                                                                                      TypeData.Instance.ImfactTextCount;
-                    TypeData.Instance.GetTypeAchievement().AchievementDic["回改"].关连值 = TypeData.Instance.BackTimes;
-                    TypeData.Instance.GetTypeAchievement().AchievementDic["错字"].关连值 = TypeData.Instance.ErrorWords.Count;
-                    TypeData.Instance.GetTypeAchievement().AchievementDic["键数"].关连值 = TypeData.Instance.KickTimes;
-                    TypeData.Instance.GetTypeAchievement().AchievementDic["输入法"].关连值 =
+                    TypeData.Instance.GetTypeAchievement().AchievementDic["码长"].TypeData.关连值 = TypeData.Instance.KickTimes*1.0/
+                                                                                      TypeData.Instance.TypeText.Length;
+                    TypeData.Instance.GetTypeAchievement().AchievementDic["回改"].TypeData.关连值 = TypeData.Instance.BackTimes;
+                    TypeData.Instance.GetTypeAchievement().AchievementDic["错字"].TypeData.关连值 = TypeData.Instance.ErrorWords.Count;
+                    TypeData.Instance.GetTypeAchievement().AchievementDic["键数"].TypeData.关连值 = TypeData.Instance.KickTimes;
+                    TypeData.Instance.GetTypeAchievement().AchievementDic["输入法"].TypeData.关连值 =
                         InputLanguage.CurrentInputLanguage.LayoutName;
                     TypeData.Instance.GetTypeAchievement().InputOperation(); //对输入法进行处理输出
                     if (TempData.Instance.BackReport.Count > 0)
@@ -98,12 +122,8 @@ namespace TyGdqJjb
                         {
                             var backTimes =
                                 TempData.Instance.BackReport.First(o => o.Value == max);
-                            TypeData.Instance.GetTypeAchievement().AchievementDic["回次"].关连值 = "[" +
-                                                                                              TypeData.Instance.TypeText
-                                                                                                  [
-                                                                                                      backTimes.Key] +
-                                                                                              "]" +
-                                                                                              backTimes.Value + "次";
+                            TypeData.Instance.GetTypeAchievement().AchievementDic["回次"].TypeData.关连值 = "[" +TypeData.Instance.TypeText[backTimes.Key] +
+                                                                                              "]" +backTimes.Value + "次";
                         }
                     }
                     if (TypeData.Instance.TypeState == TypeState.TypeOver)
@@ -139,6 +159,8 @@ namespace TyGdqJjb
 
         private void 重打ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            timer.Enabled = false;
+            this.lblTime.Text = "0000";
             TypeData.Instance.InitAll();
         }
 
@@ -171,7 +193,7 @@ namespace TyGdqJjb
                 if (colorDialog.ShowDialog(this) != DialogResult.OK) return;
                 GlobalModel.Instance.Theme.Right = colorDialog.Color;
                 GlobalModel.Instance.ConfigModel.ConfigSave(ConfigType.Theme);
-                打对色ToolStripMenuItem.ForeColor = colorDialog.Color;
+                打对色ToolStripMenuItem.Image = TempData.Instance.GetColor(colorDialog.Color);
             }
         }
 
@@ -182,12 +204,25 @@ namespace TyGdqJjb
                 if (colorDialog.ShowDialog(this) != DialogResult.OK) return;
                 GlobalModel.Instance.Theme.Wrong = colorDialog.Color;
                 GlobalModel.Instance.ConfigModel.ConfigSave(ConfigType.Theme);
-                打错色ToolStripMenuItem.ForeColor = colorDialog.Color;
+                打错色ToolStripMenuItem.Image = TempData.Instance.GetColor(colorDialog.Color);
             }
         }
         #endregion
 
         #region 对照区右键菜单 
+        private void 复制ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Clipboard.SetText(this.richTextBoxEx1.Text.Substring(this.richTextBoxEx1.SelectionStart,
+                                                                     this.richTextBoxEx1.SelectionLength));
+            }
+            catch (Exception ex)
+            {
+                TyLogModel.Instance.WriteLog(LogType.ClipboardError, ex.Message);
+            }
+        }
+
         private void 最高停留色ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using (var colorDialog = new ColorDialog { Color = GlobalModel.Instance.Theme.MaxStay, FullOpen = true })
@@ -195,7 +230,7 @@ namespace TyGdqJjb
                 if (colorDialog.ShowDialog(this) != DialogResult.OK) return;
                 GlobalModel.Instance.Theme.MaxStay = colorDialog.Color;
                 GlobalModel.Instance.ConfigModel.ConfigSave(ConfigType.Theme);
-                最高停留色ToolStripMenuItem.ForeColor = colorDialog.Color;
+                最高停留色ToolStripMenuItem.Image = TempData.Instance.GetColor(colorDialog.Color);
             }
         }
 
@@ -206,7 +241,7 @@ namespace TyGdqJjb
                 if (colorDialog.ShowDialog(this) != DialogResult.OK) return;
                 GlobalModel.Instance.Theme.BackSpaceColor = colorDialog.Color;
                 GlobalModel.Instance.ConfigModel.ConfigSave(ConfigType.Theme);
-                回改色ToolStripMenuItem.ForeColor = colorDialog.Color;
+                回改色ToolStripMenuItem.Image = TempData.Instance.GetColor(colorDialog.Color);
             }
         }
 
@@ -278,6 +313,5 @@ namespace TyGdqJjb
             settingForm.ShowDialog(this);
         }
         #endregion
-
     }
 }

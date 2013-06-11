@@ -44,8 +44,23 @@ namespace TyGdqJjb.TyControls
                 this.SelectionStart = find.Start;
                 this.SelectionLength = find.Word.Length;
                 this.SelectionColor = GlobalModel.Instance.Theme.MaxStay;
-                TypeData.Instance.GetTypeAchievement().AchievementDic["停留"].关连值 = string.Format("[{0}]{1}s", find.Word,find.UseTime.TotalSeconds.ToString("0.00"));
-                TypeData.Instance.GetTypeAchievement().AchievementDic["打词"].关连值 = TempData.Instance.TypeReport.Count(o => o.Word.Length >= 2);
+                TypeData.Instance.GetTypeAchievement().AchievementDic["停留"].TypeData.关连值 = string.Format("[{0}]{1}s", find.Word,find.UseTime.TotalSeconds.ToString("0.00"));
+                var typeWords = TempData.Instance.TypeReport.Count(o => o.Word.Length >= 2);
+                if (typeWords > 0)
+                {
+                    var typeWordZs = TempData.Instance.TypeReport.Where(o => o.Word.Length > 1).Sum(o => o.Word.Length);
+                    var typeWordJs = TempData.Instance.TypeReport.Where(o => o.Word.Length > 1).Sum(o => o.Kicks);
+                    var typeWordUse =
+                        TempData.Instance.TypeReport.Where(o => o.Word.Length > 1).Sum(o => o.UseTime.TotalSeconds);
+                    var 字数所占比例 = (typeWordZs*100.0/TypeData.Instance.TypeText.Length).ToString("0.00") + "%";
+                    var 打词击键 = (typeWordJs*1.0/typeWordUse).ToString("0.00");
+                    TypeData.Instance.GetTypeAchievement().AchievementDic["打词"].TypeData.关连值 = typeWords + "(" + 字数所占比例 +
+                                                                                               "/" + 打词击键 + ")";
+                }
+                else
+                {
+                    TypeData.Instance.GetTypeAchievement().AchievementDic["打词"].TypeData.关连值 = typeWords;
+                }
             }
         }
 

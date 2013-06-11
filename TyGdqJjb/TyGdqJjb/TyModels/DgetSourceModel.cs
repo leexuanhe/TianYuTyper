@@ -32,7 +32,7 @@ namespace TyGdqJjb.TyModels
             OnTypeStart(new TyInfo(typeState), dateTime);
             TypeData.Instance.TypeState = TypeState.Typing;
             TypeData.Instance.StartTime = dateTime;
-            TypeData.Instance.GetTypeAchievement().AchievementDic["字数"].关连值 = TypeData.Instance.TypeText.Length;
+            TypeData.Instance.GetTypeAchievement().AchievementDic["字数"].TypeData.关连值 = TypeData.Instance.TypeText.Length;
         }
 
         /// <summary>

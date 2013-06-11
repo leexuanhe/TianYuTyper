@@ -64,6 +64,7 @@ namespace TyModel.Data
         private bool _lastErrorNotSend = true;
         private bool _isUseWhiteList = false;
         private string _userSignWrite = "";//签名
+        private string _splitString = " ";
 
         /// <summary>
         /// 最后一次输入错了，则 触发完成
@@ -81,5 +82,13 @@ namespace TyModel.Data
         }
 
         //var r = new Regex(@"QQ20\d{2}");
+        /// <summary>
+        /// 成绩分隔符
+        /// </summary>
+        public string SplitString
+        {
+            set { _splitString = value; }
+            get { return _splitString; }
+        }
     }
 }

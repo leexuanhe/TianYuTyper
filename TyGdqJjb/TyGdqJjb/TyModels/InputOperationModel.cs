@@ -31,7 +31,7 @@ namespace TyGdqJjb.TyModels
 
         public void InputLan()
         {
-            var inputL = TypeData.Instance.GetTypeAchievement().AchievementDic["输入法"].关连值.ToString();
+            var inputL = TypeData.Instance.GetTypeAchievement().AchievementDic["输入法"].TypeData.关连值.ToString();
             if (inputL.Trim().Length == 0) inputL = "五笔";
             foreach (var iL in InputLanguage.InstalledInputLanguages.Cast<InputLanguage>().Where(iL => iL.LayoutName.Contains(inputL)))
             {

@@ -52,8 +52,6 @@ namespace TyModel.Data
             get { return TypeInfo.Text; }
         }
 
-        public int ImfactTextCount { set; get; }
-
         /// <summary>
         ///     键数
         /// </summary>
@@ -108,7 +106,6 @@ namespace TyModel.Data
             //Speed2 = 0;
             GetTypeAchievement().Speed2 = 0;
             GetTypeAchievement().Clear();
-            ImfactTextCount = 0;
             ErrorWords.Clear();
         }
 

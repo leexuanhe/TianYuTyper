@@ -7,6 +7,17 @@ using TyModel.Model;
 
 namespace TyModel.Data
 {
+    public class  TypeAchieveInfo
+    {
+        /// <summary>
+        /// 数据
+        /// </summary>
+        public TypeType TypeData { set; get; }
+        /// <summary>
+        ///     说明
+        /// </summary>
+        public string TypeInfo { set; get; }
+    }
     public class TypeAchievementConfig
     {
         private TypeType _speed = new TypeType { 描述词 = "速度", 优先级 = 1, 值类型 = 值类型.双精度 };
@@ -17,7 +28,7 @@ namespace TyModel.Data
         private TypeType _js = new TypeType { 描述词 = "键数", 优先级 = 6, 值类型 = 值类型.整型 };
         private TypeType _zs = new TypeType { 描述词 = "字数", 优先级 = 7, 值类型 = 值类型.整型 };
         private TypeType _maxStay = new TypeType {描述词 = "停留", 优先级 = 8, 值类型 = 值类型.字符串, 显示描述词 = false};
-        private TypeType _typeWords = new TypeType { 描述词 = "打词", 优先级 = 9, 值类型 = 值类型.整型 };
+        private TypeType _typeWords = new TypeType { 描述词 = "打词", 优先级 = 9, 值类型 = 值类型.字符串,连接值 = ""};
         private TypeType _backTimesMax = new TypeType { 描述词 = "回次", 优先级 = 10, 值类型 = 值类型.字符串,显示描述词 = false,为空不显示 = true};
 
         private TypeType _input = new TypeType
@@ -30,6 +41,15 @@ namespace TyModel.Data
                 为空不显示 = true
             };
 
+        private TypeType _startSpeed = new TypeType
+        {
+            描述词 = "起步",
+            连接值 = "",
+            值类型 = 值类型.字符串,
+            优先级 = 11,
+            为空不显示 = true
+        };
+
         public TypeType Speed { set { _speed = value; } get { return _speed; } }
         public TypeType Jj { set { _jj = value; } get { return _jj; } }
         public TypeType Mc { set { _mc = value; } get { return _mc; } }
@@ -39,6 +59,12 @@ namespace TyModel.Data
         public TypeType Zs { set { _zs = value; } get { return _zs; } }
         public TypeType MaxStay { set { _maxStay = value; } get { return _maxStay; } }
         public TypeType TypeWords { set { _typeWords = value; } get { return _typeWords; } }
+        public TypeType StartSpeed
+        {
+            set { _startSpeed = value; }
+            get { return _startSpeed; }
+        }
+
         /// <summary>
         /// 回改次数最高
         /// </summary>
@@ -61,7 +87,7 @@ namespace TyModel.Data
     /// </summary>
     public class TypeAchievement
     {
-        public Dictionary<string,TypeType> AchievementDic = new Dictionary<string, TypeType>(); 
+        public Dictionary<string,TypeAchieveInfo> AchievementDic = new Dictionary<string, TypeAchieveInfo>(); 
         public double Speed2 = 0;
        
         public TypeAchievement()
@@ -71,26 +97,35 @@ namespace TyModel.Data
 
         public void Init()
         {
-            AchievementDic.Clear();
-            AchievementDic.Add("速度", GlobalModel.Instance.Config.TypeAchievementConfig.Speed);
-            AchievementDic.Add("击键", GlobalModel.Instance.Config.TypeAchievementConfig.Jj);
-            AchievementDic.Add("码长", GlobalModel.Instance.Config.TypeAchievementConfig.Mc);
-            AchievementDic.Add("回改", GlobalModel.Instance.Config.TypeAchievementConfig.Hg);
-            AchievementDic.Add("错字", GlobalModel.Instance.Config.TypeAchievementConfig.Cz);
-            AchievementDic.Add("键数", GlobalModel.Instance.Config.TypeAchievementConfig.Js);
-            AchievementDic.Add("字数", GlobalModel.Instance.Config.TypeAchievementConfig.Zs);
-            AchievementDic.Add("停留", GlobalModel.Instance.Config.TypeAchievementConfig.MaxStay);
-            AchievementDic.Add("打词", GlobalModel.Instance.Config.TypeAchievementConfig.TypeWords);
-            AchievementDic.Add("回次", GlobalModel.Instance.Config.TypeAchievementConfig.BackTimesMax);
-            AchievementDic.Add("输入法", GlobalModel.Instance.Config.TypeAchievementConfig.Input);
+            ReAdd();
             ReSort();
+        }
+
+        /// <summary>
+        /// 添加项目
+        /// </summary>
+        public void ReAdd()
+        {
+            AchievementDic.Clear();
+            AchievementDic.Add("速度", new TypeAchieveInfo { TypeData = GlobalModel.Instance.Config.TypeAchievementConfig.Speed, TypeInfo = "速度显示 单位为 字每分" });
+            AchievementDic.Add("击键", new TypeAchieveInfo { TypeData = GlobalModel.Instance.Config.TypeAchievementConfig.Jj, TypeInfo = "击键显示 单位为 键每秒" });
+            AchievementDic.Add("码长", new TypeAchieveInfo { TypeData = GlobalModel.Instance.Config.TypeAchievementConfig.Mc, TypeInfo = "码长显示 单位为 键每字" });
+            AchievementDic.Add("回改", new TypeAchieveInfo { TypeData = GlobalModel.Instance.Config.TypeAchievementConfig.Hg, TypeInfo = "回改次数 而非按backspace次数" });
+            AchievementDic.Add("错字", new TypeAchieveInfo { TypeData = GlobalModel.Instance.Config.TypeAchievementConfig.Cz, TypeInfo = "错字个数" });
+            AchievementDic.Add("键数", new TypeAchieveInfo { TypeData = GlobalModel.Instance.Config.TypeAchievementConfig.Js, TypeInfo = "按键总次数" });
+            AchievementDic.Add("字数", new TypeAchieveInfo { TypeData = GlobalModel.Instance.Config.TypeAchievementConfig.Zs, TypeInfo = "跟打字数显示" });
+            AchievementDic.Add("停留", new TypeAchieveInfo { TypeData = GlobalModel.Instance.Config.TypeAchievementConfig.MaxStay, TypeInfo = "[字或词]时间" });
+            AchievementDic.Add("打词", new TypeAchieveInfo { TypeData = GlobalModel.Instance.Config.TypeAchievementConfig.TypeWords, TypeInfo = "打词【次数】(打词长度占比/打词击键)" });
+            AchievementDic.Add("回次", new TypeAchieveInfo { TypeData = GlobalModel.Instance.Config.TypeAchievementConfig.BackTimesMax, TypeInfo = "回改最高次数的字及次数显示" });
+            AchievementDic.Add("输入法", new TypeAchieveInfo { TypeData = GlobalModel.Instance.Config.TypeAchievementConfig.Input, TypeInfo = "输入法是由程序自动获取的，无法自由设置" });
+            AchievementDic.Add("起步", new TypeAchieveInfo { TypeData = GlobalModel.Instance.Config.TypeAchievementConfig.StartSpeed, TypeInfo = "用户跟打前五次输入产生的 速度/击键/码长 为起步数据" });
         }
         /// <summary>
         /// 重新排序
         /// </summary>
         public void ReSort()
         {
-            AchievementDic = AchievementDic.OrderBy(o => o.Value.优先级).ToDictionary(pair => pair.Key, pair => pair.Value);
+            AchievementDic = AchievementDic.OrderBy(o => o.Value.TypeData.优先级).ToDictionary(pair => pair.Key, pair => pair.Value);
         }
 
         /// <summary>
@@ -100,14 +135,14 @@ namespace TyModel.Data
         {
             //能否被空格分隔
             var temp = TypeData.Instance.GetTypeAchievement().AchievementDic["输入法"];
-            var test1 = temp.关连值.ToString().Split(' ');
+            var test1 = temp.TypeData.关连值.ToString().Split(' ');
             var reg1 = new Regex(@"五笔|拼音|输入法");
             if (test1.Length > 0)
             {
                 for (var i = test1.Length - 1; i >= 0; i--)
                 {
                     if (!reg1.IsMatch(test1[i])) continue;
-                    temp.关连值 = test1[i].Trim().Replace("输入法","");
+                    temp.TypeData.关连值 = test1[i].Trim().Replace("输入法","");
                     break;
                 }
             }
@@ -120,32 +155,44 @@ namespace TyModel.Data
         {
             foreach (var typeType in AchievementDic)
             {
-                switch (typeType.Value.值类型)
+                switch (typeType.Value.TypeData.值类型)
                 {
                     case 值类型.字符串:
-                        typeType.Value.关连值 = "";
+                        typeType.Value.TypeData.关连值 = "";
                         break;
                     default:
-                        typeType.Value.关连值 = 0;
+                        typeType.Value.TypeData.关连值 = 0;
                         break;
                 }
             }
         }
+
+        /// <summary>
+        /// 恢复默认配置
+        /// </summary>
+        public void ReSet()
+        {
+            GlobalModel.Instance.Config.TypeAchievementConfig = new TypeAchievementConfig();
+            ReAdd();
+            ReSort();
+        }
+
         public override string ToString()
         {
             var str = new StringBuilder();
             //段号
-            str.Append(TypeData.Instance.TypeInfo.DuanHao + " ");
+            str.Append(TypeData.Instance.TypeInfo.DuanHao + GlobalModel.Instance.Config.SplitString);
             // 根据优先级来确定谁先输出
             //Achievement.OrderBy(o => o.优先级);
-            foreach (var typeType in AchievementDic.Where(typeType => typeType.Value.显示))
+            foreach (var typeType in AchievementDic.Where(typeType => typeType.Value.TypeData.显示))
             {
-                str.Append(typeType.Value + " ");
+                if (typeType.Value.ToString().Length > 0)
+                    str.Append(typeType.Value.TypeData + GlobalModel.Instance.Config.SplitString);
             }
             //签名
             if (!string.IsNullOrEmpty(GlobalModel.Instance.Config.UserSignWrite))
             {
-                str.Append("个签：" + GlobalModel.Instance.Config.UserSignWrite.Trim() + " ");
+                str.Append("个签：" + GlobalModel.Instance.Config.UserSignWrite.Trim() + GlobalModel.Instance.Config.SplitString);
             }
             //版本号
             str.Append(GlobalModel.Instance.FormInfo.LittleVersion);

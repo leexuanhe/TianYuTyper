@@ -67,6 +67,7 @@ namespace TyGdqJjb.TyModels
         /// </summary>
         public void GetTextFromQQ()
         {
+            if (GlobalModel.Instance.GroupData.Now == "未设置") return;
             var oldPoint = new Point();
             GetCursorPos(ref oldPoint);
             SetActive();//将群激活
@@ -80,7 +81,7 @@ namespace TyGdqJjb.TyModels
             mouse_event(MouseEventFlag.LeftUp, 0, 0, 0, UIntPtr.Zero);
             delay(80);
             SendKeys.SendWait("^a");
-            SendKeys.SendWait("^a");
+            //SendKeys.SendWait("^a");
             delay(80);
             SendKeys.SendWait("^c");
             try
@@ -105,12 +106,12 @@ namespace TyGdqJjb.TyModels
             SetActive();//激活窗口
             try
             {
-                Clipboard.SetText(text);
+                Clipboard.SetDataObject(text,true,2,100);
             }
             catch (Exception err)
             {
                 TyLogModel.Instance.WriteLog(LogType.ClipboardError,err.Message);
-                MessageBox.Show("剪切板异常，已记录日志。");
+                //MessageBox.Show("剪切板异常，已记录日志。");
                 return;
             }
             delay(80);//延迟

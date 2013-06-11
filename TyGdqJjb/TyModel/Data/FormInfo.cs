@@ -10,8 +10,8 @@ namespace TyModel.Data
     public class FormInfo
     {
         public string FormTitle = "极致随心";
-        public string FormVersion = "0.02";
+        public string FormVersion = "0.03";
         public string FormTitleAndVersion { get { return string.Format("{0}v{1}", FormTitle, FormVersion); } }
-        public string LittleVersion = "y2";
+        public string LittleVersion = "y3";
     }
 }
